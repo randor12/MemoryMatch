@@ -45,8 +45,14 @@ public class ProjectRunner {
 
         int ans = 0;
         HashMap<String, Integer> map = new HashMap<String, Integer>();
+        int unseen = 0;
+        int seen = 0;
         for (int i = 0; i < n; i++) {
-            if (card[i] == null || removed[i])
+            if (card[i] == null) {
+                unseen++;
+                continue;
+            }
+            if (removed[i])
                 continue;
             Integer val = map.get(card[i]);
             if (val == null) {
@@ -55,7 +61,15 @@ public class ProjectRunner {
             else {
                 map.put(card[i], val + 1);
                 ans++;
+                seen -= 2;
             }
+        }
+
+        if (seen == unseen) {
+            ans += seen;
+        }
+        else if (unseen == 2) {
+            ans++;
         }
 
         out.println(ans);
